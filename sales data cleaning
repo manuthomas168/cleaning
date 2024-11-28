@@ -1,0 +1,34 @@
+import pandas as pd
+
+df = pd.read_excel("first_hour_sales.xlsx")
+
+#print(df)
+#print(df.info())
+
+# df = df.set_index("Transaction ID")
+# print(df)
+# df = df.drop(columns=["Till ID"])
+# print(df)
+
+# df = df.dropna(how="any")
+ 
+# df = df.drop_duplicates()
+# print(df)
+
+def float_to_time(time_record):
+    # convert float to a string
+    time_record = str(time_record)
+    # split the input string at the decimal point
+    hours, minutes = time_record.split('.')
+    # format the hours and minuets into HH:MM
+    timestamp = f"{int(hours):02}:{int(minutes):02}"
+    return timestamp
+ 
+#  df["Time"] = pd.to_datetime(df["Time"])
+df["Time"] = df["Time"].apply(float_to_time)
+print(df)
+
+def split_basket(basket_item):
+    items = basket_item.split(",")
+    stripped_items = [item.strip() for item in items]
+    return(stripped_items)
